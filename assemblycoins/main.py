@@ -715,7 +715,7 @@ def workerstuff():
   if working:
     print "I am trying to work now"
     workertasks.more_blocks(50)
-    workertasks.checkaddresses()
+    #workertasks.checkaddresses()
     #try:
     workertasks.tx_queue_batches()
 
