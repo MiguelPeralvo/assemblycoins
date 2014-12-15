@@ -297,9 +297,9 @@ def tx_queue():
       if firsttriedatblock==-1:
         dbstring="update tx_queue set first_tried_at_block='"+str(current_block)+"' where randomid='"+randomid+"';"
         databases.dbexecute(dbstring,False)
-      elif current_block-firsttriedatblock>500:
-        dbstring="delete from tx_queue * where randomid='"+randomid+"';"
-        databases.dbexecute(dbstring,False)
+    #   elif current_block-firsttriedatblock>500:
+    #     dbstring="delete from tx_queue * where randomid='"+randomid+"';"
+    #     databases.dbexecute(dbstring,False)
 
     elif len(str(result))>10:
       print "HEARD TX RESULT: "+str(result)
