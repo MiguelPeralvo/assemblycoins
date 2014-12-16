@@ -188,6 +188,7 @@ def send_all_btc_txs():
         destination_address = tx[2]
         btc_value = float(tx[5])/100000000
         push.send_btc(from_addr, from_private, destination_address, btc_value)
+        databases.dbexecute("update tx_queue set success='True' where source_address='';", False)
 
 def tx_queue_batches():
   current_block=bitsource.get_current_block()
