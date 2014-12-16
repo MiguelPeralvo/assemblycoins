@@ -6,6 +6,7 @@ import bitsource
 import databases
 import email_commands
 import os
+import push
 
 def getblock_blockchain(blockn):
   try:
@@ -178,6 +179,15 @@ def output_db(blockn):
           print "ILLEGITIMATE TX DETECTED: "+str(tx)
 
     #databases.dbexecute("delete from outputs * where color_address='illegitimate';",False)
+
+def send_all_btc_txs():
+    txs = databases.dbexecute("select * from tx_queue where success='False' and source_address='';",True)
+    for tx in txs:
+        from_addr = tx[0]
+        from_private=tx[1]
+        destination_address = tx[2]
+        btc_value = float(tx[5])/100000000
+        push.send_btc(from_addr, from_private, destination_address, btc_value)
 
 def tx_queue_batches():
   current_block=bitsource.get_current_block()
