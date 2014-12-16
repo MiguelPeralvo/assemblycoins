@@ -199,24 +199,7 @@ def tx_queue_batches():
     for color in colors:
 
       if color[0]=='': #IS BTC TRANSFER NOT COLORED
-        txs=databases.dbexecute("select * from tx_queue where from_public='"+str(sender)+"' and success='False' and source_address='';",True)
-
-        for x in txs:
-          public_address=x[0]
-          private_key=x[1]
-          amount=x[5]*0.00000001
-          destination=x[2]
-          fee=os.environ['STANDARD_BTC_FEE']
-          #print str(public_address)+" / "+str(amount)+ " / "+str(destination)+" / "+str(fee)
-          tx=transactions.make_raw_transaction(public_address,amount,destination, fee)
-          try:
-              tx2=transactions.sign_tx(tx, private_key)
-          except:
-              tx2=''
-          tx3=transactions.pushtx(tx2)
-          if len(tx3)>0:
-            databases.dbexecute("update tx_queue set success='True', txhash='"+str(tx3)+"' where randomid='"+str(x[10])+"'", False)
-
+        send_all_btc_txs()
       else:
 
         txs=databases.dbexecute("select * from tx_queue where from_public='"+sender+"' and success='False' and source_address='"+color[0]+"';",True)
