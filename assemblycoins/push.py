@@ -1,5 +1,5 @@
 import transactions
-
+import os
 
 def send_btc(from_addr, from_private, destination_address, btc_value):
      fee=os.environ['STANDARD_BTC_FEE']
