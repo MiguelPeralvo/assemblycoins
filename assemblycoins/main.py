@@ -718,8 +718,8 @@ def workerstuff():
         workertasks.checkaddresses()
         try:
             workertasks.tx_queue_batches()
-        else:
-            print "working is off"
+    else:
+        print "working is off"
 
 if __name__ == '__main__':
   app.run()
