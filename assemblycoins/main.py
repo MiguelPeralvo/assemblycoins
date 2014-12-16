@@ -712,15 +712,14 @@ def update_meta_db(lastblockprocessed, additional_txs):
 working=True
 
 def workerstuff():
-  if working:
-    print "I am trying to work now"
-    workertasks.more_blocks(50)
-    workertasks.checkaddresses()
-    try:
-        workertasks.tx_queue_batches()
-
-  else:
-    print "working is off"
+    if working:
+        print "I am trying to work now"
+        workertasks.more_blocks(50)
+        workertasks.checkaddresses()
+        try:
+            workertasks.tx_queue_batches()
+        else:
+            print "working is off"
 
 if __name__ == '__main__':
   app.run()
