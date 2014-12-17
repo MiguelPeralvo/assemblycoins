@@ -12,4 +12,6 @@ def send_btc(from_addr, from_private, destination_address, btc_value):
      tx3=transactions.pushtx(tx2)
      print "SENT BTC"
      print tx3
+     if tx3==None:
+         print "FAILED - returned None"
      return tx3
