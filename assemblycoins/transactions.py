@@ -407,16 +407,8 @@ def create_transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, colo
   if leftover_btc>int(dust*100000000):
     outputs.append(btcchange)
 
-  try:
-    tx=mktx(inputs, outputs)
-  except:
-    print inputs
-    print outputs
-    print "ERROR MKTX"
-
-  #
-  # print 'tx'
-  # print tx
+  tx=mktx(inputs, outputs)
+ # print tx
 
   asset_quantities=coloramt_array
   if leftover_color>0:
@@ -427,7 +419,7 @@ def create_transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, colo
   tx2=add_op_return(tx,message, 0)  #JUST TRANSFERS
   #
   # print 'tx2'
-  # print tx2
+  print tx2
 
   for i in range(len(inputs)):
     tx2=sign_tx(tx2,privatekey)
