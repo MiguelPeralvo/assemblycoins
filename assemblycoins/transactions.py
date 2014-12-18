@@ -407,7 +407,13 @@ def create_transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, colo
   if leftover_btc>int(dust*100000000):
     outputs.append(btcchange)
 
-  tx=mktx(inputs, outputs)
+  try:
+    tx=mktx(inputs, outputs)
+  except:
+    print "SOME ERROR"
+    print inputs
+    print outputs
+
  # print tx
 
   asset_quantities=coloramt_array
