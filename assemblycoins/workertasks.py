@@ -191,11 +191,11 @@ def send_all_btc_txs():
         if not response==None:
             databases.dbexecute("update tx_queue set success='True' where source_address='';", False)
 
-def send_tips():
-    txs = databases.dbexecute("select * from tx_queue where success='False' and type='tip';",True)
-    helper_private_key = ENV['helper_private_key']
-    for tx in txs:
-        
+# def send_tips():
+#     txs = databases.dbexecute("select * from tx_queue where success='False' and type='tip';",True)
+#     helper_private_key = ENV['helper_private_key']
+#     for tx in txs:
+#
 
 def tx_queue_batches():
   current_block=bitsource.get_current_block()
