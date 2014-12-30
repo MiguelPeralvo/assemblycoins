@@ -316,7 +316,10 @@ def declaration_tx(fromaddr, fee_each, privatekey, message):
       if indexend>len(message):
         indexend=len(message)
       specific_input=specific_inputs[n:n+1]
-      submessage=str(n)+" "+message[indexstart:indexend]
+      if n_transactions>1:
+          submessage=message[indexstart:indexend]
+      else:
+          submessage=str(n)+" "+message[indexstart:indexend]
       #print submessage
       r=send_op_return(fromaddr, fromaddr, fee_each, submessage, privatekey,specific_input)
       print r
@@ -377,6 +380,59 @@ def create_transfer_tx(fromaddr, dest, fee, privatekey, coloramt, inputs, inputc
     j=j+1
 
   return response, free_outputs
+
+def create_transfer_tx_with_helper(fromaddr, dest, fee, privatekey, coloramt, inputs, inputcoloramt, othermeta, helper_privatekey, helper_inputs):
+  fee=int(fee*100000000)
+  sum_inputs=0
+  for x in inputs:
+    sum_inputs=x['value']+sum_inputs
+    print x['value']
+  print "SUM INPUTS: "+str(sum_inputs)
+
+  outputs=[]
+  transfer={}
+  transfer['value']=int(dust*100000000)
+  transfer['address']=dest
+  outputs.append(transfer)
+  colorchange={}
+  colorchange['value']=int(dust*100000000)
+  colorchange['address']=fromaddr
+  outputs.append(colorchange)
+  btcchange={}
+  btcchange['value']=int(sum_inputs-fee-2*int(dust*100000000))
+  print "BTCCHANGE "+str(btcchange['value'])
+  btcchange['address']=fromaddr
+  if btcchange['value']>=int(dust*100000000):
+    outputs.append(btcchange)
+
+  tx=mktx(inputs,outputs)
+
+  asset_quantities=[coloramt, inputcoloramt-coloramt]
+  print "METADATA"
+  print asset_quantities
+  print othermeta
+  print ""
+  message=bitsource.write_metadata(asset_quantities, othermeta)
+  message=message.decode('hex')
+  tx2=add_op_return(tx,message, 0)  #JUST TRANSFERS
+
+  for i in range(len(inputs)):
+    tx2=sign_tx(tx2,privatekey)
+  print tx2
+  response=pushtx(tx2)
+
+  free_outputs=[]
+  j=1
+  for x in outputs:
+    r={}
+    r['value']=x['value']
+    if not response is None:
+      r['output']=str(response)+":"+str(j)
+      free_outputs.append(r)
+    j=j+1
+
+  return response, free_outputs
+
 
 def create_transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, coloramt_array, inputs, inputcoloramt, othermeta):
   global outputs, tx, tx2
@@ -500,6 +556,18 @@ def transfer_tx(fromaddr, dest, fee, privatekey, sourceaddress, coloramt, otherm
     inputcoloramt=inputdata[1]
     result=create_transfer_tx(fromaddr, dest, fee, privatekey, coloramt, inputs, inputcoloramt, othermeta)
   return result
+
+def transfer_tx_with_helper(fromaddr, dest, fee, private_key, helper_private_key, colormat, inputs, helper_inputs, inputcoloramt, othermeta):
+    btcneeded=fee+dust*4
+    coloraddress=databases.first_coloraddress_from_sourceaddress(sourceaddress)
+    result=''
+    if len(coloraddress)>0:
+      coloramt=int(coloramt)
+      inputdata=find_transfer_inputs(fromaddr, coloraddress, coloramt, btcneeded)
+      inputs=inputdata[0]
+      inputcoloramt=inputdata[1]
+      result=create_transfer_tx(fromaddr, dest, fee, privatekey, coloramt, inputs, inputcoloramt, othermeta)
+    return result
 
 #MANY AT ONCE
 def transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, sourceaddress, coloramt_array, othermeta):
