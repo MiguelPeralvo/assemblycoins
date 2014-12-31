@@ -188,7 +188,7 @@ def send_all_btc_txs():
         destination_address = tx[2]
         btc_value = float(tx[5])/100000000
         response = push.send_btc(from_addr, from_private, destination_address, btc_value)
-        if not response==None:
+        if len(response)>20:
             databases.dbexecute("update tx_queue set success='True' where source_address='';", False)
 
 # def send_tips():
