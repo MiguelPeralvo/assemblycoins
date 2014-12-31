@@ -212,7 +212,7 @@ def tx_queue_batches():
 
         txs=databases.dbexecute("select * from tx_queue where from_public='"+sender+"' and success='False' and source_address='"+color[0]+"';",True)
 
-        tx_lists = bitsource.split_lists(15, txs)
+        tx_lists = bitsource.split_lists(5, txs)
 
         for txs in tx_lists:
             color_needed=0
@@ -243,7 +243,7 @@ def tx_queue_batches():
 
             sourceaddress=color[0]
             coloraddress=databases.first_coloraddress_from_sourceaddress(sourceaddress)
-            btc_needed=float(btc_needed)/100000000/2
+            btc_needed=float(btc_needed)/100000000*0.5
             inputs=transactions.find_transfer_inputs(fromaddr, coloraddress, color_needed, btc_needed)
             inputcolortamt=inputs[1]
             inputs=inputs[0]
