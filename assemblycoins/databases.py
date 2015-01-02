@@ -34,7 +34,7 @@ def dbexecute(sqlcommand, receiveback):
       result=cur.fetchall()
     except:
       result=''
-      PRINT "COULD NOT EDIT DB"
+      print "COULD NOT EDIT DB"
   con.commit()
   cur.close()
   con.close()
