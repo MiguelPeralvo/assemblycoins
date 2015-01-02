@@ -30,7 +30,11 @@ def dbexecute(sqlcommand, receiveback):
       print "SQL COMMAND FAILED"
       print ''
   if receiveback:
-    result=cur.fetchall()
+    try:
+      result=cur.fetchall()
+    except:
+      result=''
+      PRINT "COULD NOT EDIT DB"
   con.commit()
   cur.close()
   con.close()
