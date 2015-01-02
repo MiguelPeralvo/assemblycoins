@@ -295,8 +295,8 @@ def tx_queue():
         result=result[0]
     else:
         result = None
-        
-    elif len(str(result))>10:
+
+    if len(str(result))>10:
       print "HEARD TX RESULT: "+str(result)
       dbstring2="update tx_queue set txhash='"+str(result) +"', success='True' where randomid='"+randomid+"';"
       databases.dbexecute(dbstring2,False)
