@@ -22,7 +22,13 @@ def dbexecute(sqlcommand, receiveback):
   )
   result=''
   cur=con.cursor()
-  cur.execute(sqlcommand)
+  try:
+      cur.execute(sqlcommand)
+  except:
+      print "COULD NOT EDIT DB"
+      print sqlcommand
+      print "SQL COMMAND FAILED"
+      print ''
   if receiveback:
     result=cur.fetchall()
   con.commit()
