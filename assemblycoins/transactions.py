@@ -469,6 +469,7 @@ def create_transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, colo
     print "SOME ERROR"
     print inputs
     print outputs
+    tx = None
 
  # print tx
   if tx is not None:
