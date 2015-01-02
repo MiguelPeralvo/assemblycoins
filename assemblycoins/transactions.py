@@ -495,7 +495,7 @@ def find_transfer_inputs(fromaddr, coloraddress, coloramt, btc):
   if coloraddress is None:
     coloraddress="none"
   available_inputs=databases.dbexecute("SELECT * FROM OUTPUTS WHERE spent='False' and destination_address='"+fromaddr+"' and color_address='"+coloraddress+"';",True)
-  forbidden_inputs = databases.dbexecute("SELECT * FROM OUTPUTS WHERE spent='False' and destination_address='"+fromaddr+"' and not color_address='"+str(coloraddress)+" and not color_address='';",True)
+  forbidden_inputs = databases.dbexecute("SELECT * FROM OUTPUTS WHERE spent='False' and destination_address='"+fromaddr+"' and not color_address='"+str(coloraddress)+"' and not color_address='';",True)
   other_inputs=addresses.get_unspent(fromaddr)
   totalfound=0
   btc=int(btc*100000000)
