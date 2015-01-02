@@ -301,15 +301,16 @@ def tx_queue():
     if len(str(result))>10:
       print "HEARD TX RESULT: "+str(result)
       dbstring2="update tx_queue set txhash='"+str(result) +"', success='True' where randomid='"+randomid+"';"
-      databases.dbexecute(dbstring2,False)
+      r= databases.dbexecute(dbstring2,False)
       print dbstring2
-      response={}
-      response['transaction_hash']=result
-      response=json.dumps(response)
-      postresponse=requests.post(tx[9], data=response)
-      print "SENDING POST TO "+str(tx[9])+ " WITH DATA= "+str(response)
-      print "RESPONSE HEARD TYPE "+str(postresponse.status_code)
-      print "RESPONSE CONTENTS: "+str(postresponse.content)
+      print r
+    #   response={}
+    #   response['transaction_hash']=result
+    #   response=json.dumps(response)
+    #   #postresponse=requests.post(tx[9], data=response)
+    #   print "SENDING POST TO "+str(tx[9])+ " WITH DATA= "+str(response)
+    #   print "RESPONSE HEARD TYPE "+str(postresponse.status_code)
+    #   print "RESPONSE CONTENTS: "+str(postresponse.content)
 
 def blocks_outputs(blockend):
   lastblockprocessed=databases.dbexecute("SELECT * FROM META;",True)
