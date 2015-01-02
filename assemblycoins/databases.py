@@ -25,7 +25,7 @@ def dbexecute(sqlcommand, receiveback):
 
   cur.execute(sqlcommand)
   if receiveback:
-  result=cur.fetchall()
+      result=cur.fetchall()
 
   con.commit()
   cur.close()
