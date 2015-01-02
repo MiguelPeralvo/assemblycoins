@@ -291,17 +291,11 @@ def tx_queue():
     except:
       print "ERROR processing queued TX from "+str(fromaddr)
       result=None
-    result=result[0]
-    if result is None:
-      print "No response heard from Bitcoin Network"
-      firsttriedatblock=tx[6]
-      if firsttriedatblock==-1:
-        dbstring="update tx_queue set first_tried_at_block='"+str(current_block)+"' where randomid='"+randomid+"';"
-        databases.dbexecute(dbstring,False)
-    #   elif current_block-firsttriedatblock>500:
-    #     dbstring="delete from tx_queue * where randomid='"+randomid+"';"
-    #     databases.dbexecute(dbstring,False)
-
+    if len(result)>0:
+        result=result[0]
+    else:
+        result = None
+        
     elif len(str(result))>10:
       print "HEARD TX RESULT: "+str(result)
       dbstring2="update tx_queue set txhash='"+str(result) +"', success='True' where randomid='"+randomid+"';"
