@@ -471,23 +471,23 @@ def create_transfer_tx_multiple(fromaddr, dest_array, fee_each, privatekey, colo
     print outputs
 
  # print tx
+  if tx is not None:
+      asset_quantities=coloramt_array
+      if leftover_color>0:
+        asset_quantities.append(leftover_color)
+      print asset_quantities
+      message=bitsource.write_metadata(asset_quantities, othermeta)
+      message=message.decode('hex')
+      tx2=add_op_return(tx,message, 0)  #JUST TRANSFERS
+      #
+      # print 'tx2'
+      print tx2
 
-  asset_quantities=coloramt_array
-  if leftover_color>0:
-    asset_quantities.append(leftover_color)
-  print asset_quantities
-  message=bitsource.write_metadata(asset_quantities, othermeta)
-  message=message.decode('hex')
-  tx2=add_op_return(tx,message, 0)  #JUST TRANSFERS
-  #
-  # print 'tx2'
-  print tx2
-
-  for i in range(len(inputs)):
-    tx2=sign_tx(tx2,privatekey)
-  print tx2
-  response=pushtx(tx2)
-  return response
+      for i in range(len(inputs)):
+        tx2=sign_tx(tx2,privatekey)
+      print tx2
+      response=pushtx(tx2)
+      return response
 
 
 def find_transfer_inputs(fromaddr, coloraddress, coloramt, btc):
