@@ -291,10 +291,12 @@ def tx_queue():
     except:
       print "ERROR processing queued TX from "+str(fromaddr)
       result=None
-    if len(result)>0:
-        result=result[0]
-    else:
-        result = None
+
+    if not result == None:
+        if len(result)>0:
+            result=result[0]
+        else:
+            result = None
 
     if len(str(result))>10:
       print "HEARD TX RESULT: "+str(result)
