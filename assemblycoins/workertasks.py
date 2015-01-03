@@ -358,7 +358,7 @@ def checkaddresses():
       colornumber=address[6]
       colorname=address[5]
       destination=address[7]
-      fee_each=0.00005
+      fee_each=0.00004
       private_key=address[1]
       ticker=address[9]
       description=address[8]

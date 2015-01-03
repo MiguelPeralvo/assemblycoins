@@ -216,7 +216,7 @@ def givenewaddress():
   dest_address=public_address
   description=jsoninput['description']
   email=jsoninput['email']
-  fee_each=0.00005
+  fee_each=0.00004
   markup=1
   tosend=str(transactions.creation_cost(color_amount, coin_name, "", description, fee_each, markup))
 
@@ -514,7 +514,7 @@ def issuenewcoins_clientside():
   coin_recipients=str(jsoninput['coin_recipients'])
   othermeta='COIN NAME HERE'
 
-  fee=0.00005
+  fee=0.00004
   print coin_recipients
   print more_coins
   print issuing_address
@@ -538,7 +538,7 @@ def transfercoins_serverside():
   coloramt=int(jsoninput['amount'])
   source_address=str(jsoninput['source_address'])
   destination=str(jsoninput['to_public_address'])
-  fee=0.00005
+  fee=0.00004
   othermeta="Transfer"
   result=transactions.transfer_tx(fromaddr, destination, fee, privatekey, source_address, coloramt, othermeta)
   jsonresponse={}
