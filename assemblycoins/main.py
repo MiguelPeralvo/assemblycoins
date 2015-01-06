@@ -716,7 +716,7 @@ def workerstuff():
     print "I am trying to work now"
     workertasks.more_blocks(50)
     #workertasks.checkaddresses()
-    #workertasks.tx_queue_batches()
+    workertasks.tx_queue_batches()
 
 if __name__ == '__main__':
   app.run()
